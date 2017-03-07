@@ -10,6 +10,7 @@ env:
   global:
     - PROJECT_DIR_ABS=$TRAVIS_BUILD_DIR
     - YARP_DOCKER_TAG="master"
+    - MAKEFLAGS="-j 2"
   matrix:
     - GAZEBO_VERSION=gazebo7 GAZEBO_YARP_PLUGINS_BUILD_TYPE=Debug
     - GAZEBO_VERSION=gazebo7 GAZEBO_YARP_PLUGINS_BUILD_TYPE=Release
@@ -56,7 +57,7 @@ script:
     -e CC=$CC
     -e CXX=$CXX
     robotology/yarp-tdd:${GAZEBO_VERSION}${YARP_DOCKER_TAG}
-    sh -c 'cd build && make'
+    sh -c 'cd build && make ${MAKEFLAGS}'
   # Install and execute the project
   - >-
     docker run -it --rm
